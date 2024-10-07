@@ -1,0 +1,9 @@
+This is a small practical to create an ec2 instance in AWS using Ansible
+
+-Creating a EC2 instance with ami id, security group and other required details
+
+-All details provided in yaml file.
+
+-Also we are learning about ansible roles in this
+
+-final command to run the playbook --> ansible-playbook -i inventory.ini ec2_create.yaml --vault-password-file vault.pass
