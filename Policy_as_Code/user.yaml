@@ -1,0 +1,35 @@
+---
+- name: Manage AWS IAM Users and Attach EC2FullAccess Policy
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    aws_region: "ap-south-1"  # Change this to your desired AWS region
+
+  tasks:
+    - name: Gather information about all IAM users
+      community.aws.iam_user_info:
+        region: "{{ aws_region }}"
+      register: iam_users
+
+    - name: Display list of IAM users
+      debug:
+        msg: "IAM Users: {{ iam_users.iam_users | map(attribute='user_name') | list }}"
+   
+    - name: Attach EC2FullAccess policy to Ansible-User
+      community.aws.iam_user:
+        name: "Ansible-User"
+        managed_policies:
+          - "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+          - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+        state: present
+        region: "{{ aws_region }}"
+
+
+    - name: Get information for Ansible-User
+      community.aws.iam_user_info:
+        name: "Ansible-User"
+        region: "{{ aws_region }}"
+      register: user_info
+
