@@ -1,3 +1,8 @@
+
+Definition- Ansible Vault is a feature of Ansible that allows you to keep sensitive data such as passwords, API keys, or other secrets in encrypted files, rather than as plaintext in your playbooks or roles.
+
+
+
 Setup Vault:
 
 1.Create a password for vault
@@ -8,3 +13,25 @@ Setup Vault:
 
 3.Edit password file 
   ansible-vault edit group_vars/all/pass.yml --vault-password-file vault.pass
+
+4.Decrypt file --> ansible-vault decrypt <file_name> --vault-password-file <pass location>
+
+5.Explore other options --> ansible-vault
+ 
+6.Encrypt Password --> ansible-vault encrypt_string foobar --vault-password-file vault.pass
+
+7.Decrypt Password -->  ansible-vault decrypt secret.yml
+
+8.View an encrypted file --> ansible-vault view secret.yml
+
+9.Change password of an encrypted file --> ansible-vault rekey secret.yml
+
+
+# Prompt for the vault password
+   ansible-playbook site.yml --ask-vault-pass
+
+   # Use a password file (make sure this file is secured!)
+   ansible-playbook site.yml --vault-password-file ~/.vault_pass.txt
+
+   # Use a script that returns the password
+   ansible-playbook site.yml --vault-password-file ~/.vault_pass.py
